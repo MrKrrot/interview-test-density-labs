@@ -1,0 +1,7 @@
+{
+  "watch": ["src"],
+  "ignore": ["node_modules", "**/*.test.ts"],
+  "ext": "ts",
+  "exec": "ts-node -r tsconfig-paths/register --project tsconfig.json ./src/index.ts",
+  "inspect": true
+}
