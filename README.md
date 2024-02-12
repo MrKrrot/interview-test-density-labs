@@ -39,6 +39,7 @@ npm install # Install server & client dependencies
 - `DB_USER`
 - `NODE_ENV`: Environment (development, production)
 - `PORT`: Server port
+- `VITE_API_URL`: API URL (e.g. http://localhost:5000) (**NOTE**: This environment variable is for the client)
 
 <h2 id="usage">Usage</h2>
 
