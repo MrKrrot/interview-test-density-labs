@@ -2,8 +2,18 @@ import { Comment } from '@models'
 import { CommentDocument } from '@models'
 import { ServerError } from '@utils'
 
-export const findAllService = async () => {
+export const findAllCommentsService = async () => {
   return await Comment.findAll()
+}
+
+export const findCommentByIdService = async (id: number) => {
+  const comment = await Comment.findByPk(id)
+
+  if (!comment) {
+    throw new ServerError('Comment not found', 404)
+  }
+
+  return comment
 }
 
 export const createCommentService = async ({ email, text }: CommentDocument) => {

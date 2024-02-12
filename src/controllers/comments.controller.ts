@@ -2,14 +2,28 @@ import { NextFunction, Request, Response } from 'express'
 import {
   createCommentService,
   deleteCommentService,
-  findAllService,
+  findAllCommentsService,
+  findCommentByIdService,
   updateCommentService
 } from '@services'
 
 export const findComments = async (req: Request, res: Response, next: NextFunction) => {
-  const comments = await findAllService()
+  const comments = await findAllCommentsService()
   try {
     return res.json(comments)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const findSpecificComment = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params
+
+  const commentId = Number(id)
+
+  try {
+    const comment = await findCommentByIdService(commentId)
+    return res.json(comment)
   } catch (error) {
     next(error)
   }
