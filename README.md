@@ -44,10 +44,10 @@ npm install # Install server & client dependencies
 
 ```bash
 # Build client & server
+npm run build:api
 npm run build:client
-npm run build:server
 # Run server & client (production mode)
-npm run start:server
+npm run start:api
 npm run start:client
 ```
 
@@ -55,6 +55,6 @@ npm run start:client
 
 ```bash
 # Run server & client (development mode)
-npm run dev:server
+npm run dev:api
 npm run dev:client
 ```
