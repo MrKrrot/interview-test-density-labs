@@ -34,6 +34,32 @@ describe('Comments Controller', () => {
     })
   })
 
+  describe('GET /comments/:id', () => {
+    it('should return 200 if get a comment by id', async () => {
+      const comments = await Comment.bulkCreate([
+        { email: 'test@example.com', text: 'First comment' },
+        { email: 'test@example.com', text: 'Second comment' }
+      ])
+
+      const res = await api.get(`/api/v1/comments/${comments[0].id}`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.id).toBe(comments[0].id)
+      expect(res.body.email).toBe(comments[0].email)
+      expect(res.body.text).toBe(comments[0].text)
+    })
+
+    it('should return 404 if the comment is not found', async () => {
+      const res = await api.get('/api/v1/comments/999')
+
+      expect(res.status).toBe(404)
+      expect(res.body).toMatchObject({
+        message: 'Comment not found',
+        statusCode: 404
+      })
+    })
+  })
+
   describe('POST /comments', () => {
     it('should return 201 if create a new comment', async () => {
       const newComment = { email: 'test@example.com', text: 'New comment' }

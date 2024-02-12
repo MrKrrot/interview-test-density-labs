@@ -2,7 +2,8 @@
 import {
   createCommentService,
   deleteCommentService,
-  findAllService,
+  findAllCommentsService,
+  findCommentByIdService,
   updateCommentService
 } from '@services'
 import { Comment } from '@models'
@@ -28,11 +29,36 @@ describe('Comments Service', () => {
         { email: 'test@example.com', text: 'Second comment' }
       ])
 
-      const comments = await findAllService()
+      const comments = await findAllCommentsService()
 
       expect(comments).toHaveLength(2)
       expect(comments[0].email).toBe('test@example.com')
       expect(comments[0].text).toBe('First comment')
+    })
+  })
+
+  describe('findCommentByIdService', () => {
+    it('should return a comment by id', async () => {
+      const comments = await Comment.bulkCreate([
+        { email: 'test@example.com', text: 'First comment' },
+        { email: 'test@example.com', text: 'Second comment' }
+      ])
+
+      const comment = await Comment.findByPk(comments[0].id)
+
+      if (!comment) {
+        throw new Error('Comment not found')
+      }
+
+      const specificComment = await findCommentByIdService(comment.id)
+
+      expect(specificComment?.id).toBe(comment.id)
+      expect(specificComment.email).toBe(comment.email)
+      expect(specificComment.text).toBe(comment.text)
+    })
+
+    it('should thrown an Error if comment is not found', async () => {
+      await expect(findCommentByIdService(99)).rejects.toThrowError('Comment not found')
     })
   })
 
@@ -127,7 +153,7 @@ describe('Comments Service', () => {
 
       await deleteCommentService(comments[0].id)
 
-      const remainingComments = await findAllService()
+      const remainingComments = await findAllCommentsService()
 
       expect(remainingComments).toHaveLength(1)
       expect(remainingComments[0].email).toBe('test@example.com')
