@@ -37,6 +37,7 @@ npm install # Install server & client dependencies
 - `DB_PASSWORD`
 - `DB_PORT`
 - `DB_USER`
+- `DB_TEST_NAME`: Test database name
 - `NODE_ENV`: Environment (development, production)
 - `PORT`: Server port
 - `VITE_API_URL`: API URL (e.g. http://localhost:5000) (**NOTE**: This environment variable is for the client)
